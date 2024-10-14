@@ -4,6 +4,9 @@ import cors from "cors";
 import path from "path";
 import * as dotenv from "dotenv";
 import authRouter from "./routes/authRoutes";
+import empleadoRoutes from "./routes/empleadoRoutes";
+import planillaRoutes from "./routes/planillaRoutes";
+import reporteRoutes from "./routes/reporteRoutes";
 
 dotenv.config({ path: "../.env" });
 
@@ -15,6 +18,10 @@ app.use(express.json());
 
 //Rutas
 app.use("/api/auth", authRouter);
+// Rutas de cada módulo
+app.use("/employees", empleadoRoutes);
+app.use("/payrolls", planillaRoutes);
+app.use("/reports", reporteRoutes);
 
 // 1. Configura Express para servir archivos estáticos del build de React
 if (process.env.NODE_ENV === "production") {
