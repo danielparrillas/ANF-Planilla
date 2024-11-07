@@ -3,15 +3,16 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { PayrollService } from './services/planilla-service'
 import { formatCurrency } from '../../utils/format'
-import { mockEmployees } from '../mock-data'
 import { FormState } from '../../types'
 import { MainLayout } from '../../layouts/main-layout'
 import { usePayrollStore } from '../../store/payroll-store'
+import { useEmployeeStore } from '@renderer/store/employee-store'
 
 function PlanillaForm() {
   const navigate = useNavigate()
   const { id } = useParams()
 
+  const employees = useEmployeeStore((state) => state.employees)
   const addPayroll = usePayrollStore((state) => state.addPayroll)
   const updatePayroll = usePayrollStore((state) => state.updatePayroll)
   const getPayrollById = usePayrollStore((state) => state.getPayrollById)
@@ -83,7 +84,7 @@ function PlanillaForm() {
 
   // Manejador para el cambio del checkbox de aguinaldo
   const handleAguinaldoChange = (checked: boolean) => {
-    const employee = mockEmployees.find((emp) => emp.id === formData.selectedEmployee)
+    const employee = employees.find((emp) => emp.id === formData.selectedEmployee)
     if (!employee) return
 
     const aguinaldoAmount = checked ? calcularAguinaldo(employee.baseSalary, employee.startDate) : 0
@@ -104,7 +105,7 @@ function PlanillaForm() {
 
   // Update base salary when employee is selected
   const updateBaseSalary = (employeeId: string) => {
-    const employee = mockEmployees.find((emp) => emp.id === employeeId)
+    const employee = employees.find((emp) => emp.id === employeeId)
     if (employee) {
       const baseSalaryPerQuinzena = employee.baseSalary / 2
       const overtimePay = calculateOvertimePay(formData.overtimeHours, employee.baseSalary)
@@ -136,7 +137,7 @@ function PlanillaForm() {
 
   // Handle overtime hours change
   const handleOvertimeChange = (hours: number) => {
-    const employee = mockEmployees.find((emp) => emp.id === formData.selectedEmployee)
+    const employee = employees.find((emp) => emp.id === formData.selectedEmployee)
     if (employee) {
       const overtimePay = calculateOvertimePay(hours, employee.baseSalary)
       setFormData((prev) => ({
@@ -206,7 +207,7 @@ function PlanillaForm() {
     const employerIsss = grossSalary * 0.075 // 7.5%
     const employerAfp = grossSalary * 0.0875 // 8.75%
     // INSAFORP solo si hay más de 10 empleados
-    const hasInsaforp = mockEmployees.length > 10
+    const hasInsaforp = employees.length > 10
     const insaforp = hasInsaforp ? grossSalary * 0.01 : 0
     const totalEmployerContributions = employerIsss + employerAfp + insaforp
 
@@ -231,7 +232,7 @@ function PlanillaForm() {
       return { eligible: false, hasUsed: false, message: '' }
     }
 
-    const employee = mockEmployees.find((emp) => emp.id === formData.selectedEmployee)
+    const employee = employees.find((emp) => emp.id === formData.selectedEmployee)
     if (!employee) {
       return {
         eligible: false,
@@ -283,7 +284,7 @@ function PlanillaForm() {
 
   // Manejar cambio en el checkbox de vacaciones
   const handleVacationChange = (checked: boolean) => {
-    const employee = mockEmployees.find((emp) => emp.id === formData.selectedEmployee)
+    const employee = employees.find((emp) => emp.id === formData.selectedEmployee)
     if (!employee) return
 
     const vacationAmount = checked ? calculateVacation(employee.baseSalary) : 0
@@ -305,7 +306,7 @@ function PlanillaForm() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    const employeeData = mockEmployees.find((emp) => emp.id === formData.selectedEmployee)
+    const employeeData = employees.find((emp) => emp.id === formData.selectedEmployee)
     if (!employeeData) return
 
     // Verificar si ya existe una planilla para este mes
@@ -377,7 +378,7 @@ function PlanillaForm() {
                     required
                   >
                     <option value="">Seleccionar empleado</option>
-                    {mockEmployees.map((employee) => (
+                    {employees.map((employee) => (
                       <option key={employee.id} value={employee.id}>
                         {employee.name}
                       </option>

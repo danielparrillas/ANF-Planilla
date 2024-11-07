@@ -15,7 +15,7 @@ export function MainLayout({ children }: Props): ReactNode {
   }
 
   return (
-    <div className="bg-purple-50 min-h-screen">
+    <div className="bg-gray-50 min-h-screen">
       <nav className="bg-cyan-500 px-10 md:px-10 py-4 shadow-lg sticky top-0">
         <div className="container">
           <div className="flex justify-between items-center">

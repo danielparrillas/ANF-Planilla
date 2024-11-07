@@ -66,7 +66,7 @@ const HomePage: React.FC = () => {
 
   return (
     <MainLayout>
-      <main className="p-8 bg-gray-50 min-h-screen">
+      <main className="p-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-8 text-center">Sistema de Gestión</h1>
         <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
           {modules.map((module, index) => (
