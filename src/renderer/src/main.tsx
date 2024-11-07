@@ -10,6 +10,7 @@ import PlanillaList from './pages/planillas/planilla-list'
 import PlanillaForm from './pages/planillas/planilla-form'
 import ReporteList from './pages/reportes/reporte-list'
 import ReporteForm from './pages/reportes/reporte-form'
+import NotFoundPage from './pages/notFoundPage/not-found-page'
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: '/reporte/:id', // Para crear o editar reportes
     element: <ReporteForm />
+  },
+  {
+    path: '*', // Ruta de error 404
+    element: <NotFoundPage />
   }
 ])
 
