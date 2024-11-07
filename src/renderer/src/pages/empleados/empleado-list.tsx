@@ -4,6 +4,7 @@ import { formatDisplayDate } from '@renderer/utils/datetimeUtil'
 import { formatCurrency } from '@renderer/utils/format'
 import { Calendar, Pencil, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import NewEmpleadoForm from './components/new-empelado-form'
 
 function EmpleadoList() {
   const employees = useEmployeeStore((state) => state.employees)
@@ -20,12 +21,7 @@ function EmpleadoList() {
             >
               Volver
             </Link>
-            <Link
-              to="/empleado/nuevo"
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-            >
-              + Agregar
-            </Link>
+            <NewEmpleadoForm />
           </div>
         </div>
 

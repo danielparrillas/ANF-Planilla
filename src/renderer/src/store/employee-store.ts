@@ -37,3 +37,22 @@ export const useEmployeeStore = create<EmployeeState>()(
     }
   )
 )
+
+export const genereateEmployeeId = () => {
+  const employees = useEmployeeStore.getState().employees
+  const largestId = employees.reduce((acc, curr) => {
+    const id = parseInt(curr.id)
+    return id > acc ? id : acc
+  }, 0)
+  return (largestId + 1).toString()
+}
+
+export const getPositions = () => {
+  const positions = useEmployeeStore.getState().employees.map((e) => e.position)
+  return Array.from(new Set(positions))
+}
+
+export const getDepartments = () => {
+  const departments = useEmployeeStore.getState().employees.map((e) => e.department)
+  return Array.from(new Set(departments))
+}
