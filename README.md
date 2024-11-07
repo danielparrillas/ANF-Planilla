@@ -1,10 +1,34 @@
-# ANF-Planilla
-Sistema de planillas aplicando los conocimiento del Análisis Financiero
+# anf-planilla
 
-## Instalación
+An Electron application with React and TypeScript
 
-1. Instala las dependencias con `npm install`
-2. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables de entorno `cp .env.example .env`.
-3. Ejecutar el servidor:
-	- En modo desarrollo: `npm run dev`
-	- En modo producción: `npm run build` y luego `npm start`							
+## Recommended IDE Setup
+
+- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+
+## Project Setup
+
+### Install
+
+```bash
+$ npm install
+```
+
+### Development
+
+```bash
+$ npm run dev
+```
+
+### Build
+
+```bash
+# For windows
+$ npm run build:win
+
+# For macOS
+$ npm run build:mac
+
+# For Linux
+$ npm run build:linux
+```
