@@ -5,8 +5,12 @@ import { formatCurrency } from '@renderer/utils/format'
 import { Calendar, Pencil, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import NewEmpleadoForm from './components/new-empelado-form'
+import DeleteEmpleadoForm from './components/delete-empelado-form'
+import { useState } from 'react'
+import { Employee } from '@renderer/types'
 
 function EmpleadoList() {
+  const [empleadoToDelete, setEmpleadoToDelete] = useState<Employee | null>(null)
   const employees = useEmployeeStore((state) => state.employees)
   return (
     <MainLayout>
@@ -57,9 +61,8 @@ function EmpleadoList() {
                           <Pencil className="w-4 h-4" />
                           <span className="hidden md:inline">Editar</span>
                         </button>
-                        {/* <PrintPayrollModal payroll={payroll} /> */}
                         <button
-                          // onClick={() => handleDelete(payroll.id)}
+                          onClick={() => setEmpleadoToDelete(employee)}
                           className="text-red-600 hover:text-red-900 inline-flex items-center gap-1"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -114,6 +117,12 @@ function EmpleadoList() {
               Comienza creando un nuevo empleado usando el botón "Agregar"
             </div>
           </div>
+        )}
+        {empleadoToDelete && (
+          <DeleteEmpleadoForm
+            employee={empleadoToDelete}
+            onClose={() => setEmpleadoToDelete(null)}
+          />
         )}
       </div>
     </MainLayout>
