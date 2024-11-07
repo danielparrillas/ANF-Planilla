@@ -30,70 +30,74 @@ function EmpleadoList() {
         </div>
 
         {employees.length > 0 && (
-          <table className="w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Nombre
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Salario base
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Fecha de inicio
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Cargo
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
-                  Departamento
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
-                  Acciones
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {employees.map((employee) => (
-                <tr key={employee.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{employee.name}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
-                      {formatCurrency(employee.baseSalary)}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500 flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {formatDisplayDate(employee.startDate)}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{employee.position}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">{employee.department}</div>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 space-x-3">
-                    <button className="text-blue-600 hover:text-blue-900 inline-flex items-center gap-1">
-                      <Pencil className="w-4 h-4" />
-                      <span className="hidden md:inline">Editar</span>
-                    </button>
-                    {/* <PrintPayrollModal payroll={payroll} /> */}
-                    <button
-                      // onClick={() => handleDelete(payroll.id)}
-                      className="text-red-600 hover:text-red-900 inline-flex items-center gap-1"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      <span className="hidden md:inline">Eliminar</span>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <div className="overflow-x-auto max-h-[75vh] overflow-y-auto">
+              <table className="w-full">
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {employees.map((employee) => (
+                    <tr key={employee.id}>
+                      <td className="px-6 py-4 whitespace-nowrap sticky left-0 bg-white">
+                        <div className="text-sm font-medium text-gray-900">{employee.name}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">
+                          {formatCurrency(employee.baseSalary)}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-500 flex items-center gap-2">
+                          <Calendar className="w-4 h-4" />
+                          {formatDisplayDate(employee.startDate)}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{employee.position}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-gray-900">{employee.department}</div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 space-x-3">
+                        <button className="text-blue-600 hover:text-blue-900 inline-flex items-center gap-1">
+                          <Pencil className="w-4 h-4" />
+                          <span className="hidden md:inline">Editar</span>
+                        </button>
+                        {/* <PrintPayrollModal payroll={payroll} /> */}
+                        <button
+                          // onClick={() => handleDelete(payroll.id)}
+                          className="text-red-600 hover:text-red-900 inline-flex items-center gap-1"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          <span className="hidden md:inline">Eliminar</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+                <thead className="bg-gray-50 sticky top-0">
+                  <tr>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky left-0 bg-gray-50">
+                      Nombre
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Salario base
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Fecha de inicio
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Cargo
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Departamento
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      Acciones
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
         )}
 
         {employees.length === 0 && (
