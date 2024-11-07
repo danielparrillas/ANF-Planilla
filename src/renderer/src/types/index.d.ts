@@ -4,8 +4,8 @@ export interface Employee {
   name: string
   baseSalary: number
   startDate: string
-  position: string // Opcional: para mostrar el cargo
-  department: string // Opcional: para agrupar por departamento
+  position: string
+  department: string
 }
 
 export interface Payroll {

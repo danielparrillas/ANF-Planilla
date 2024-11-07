@@ -6,18 +6,44 @@ import { Calendar, Pencil, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import NewEmpleadoForm from './components/new-empelado-form'
 import DeleteEmpleadoForm from './components/delete-empelado-form'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Employee } from '@renderer/types'
+import EditEmpleadoForm from './components/edit-empelado-form'
+import { normalizeForSearch } from '@renderer/utils/normalizeForSearch'
 
 function EmpleadoList() {
   const [empleadoToDelete, setEmpleadoToDelete] = useState<Employee | null>(null)
+  const [empleadoToEdit, setEmpleadoToEdit] = useState<Employee | null>(null)
   const employees = useEmployeeStore((state) => state.employees)
+  const [search, setSearch] = useState('')
+  const [filteredEmployees, setFilteredEmployees] = useState<Employee[]>(employees)
+
+  useEffect(() => {
+    if (search === '') {
+      setFilteredEmployees(employees)
+      return
+    }
+    const filtered = employees.filter((employee) =>
+      normalizeForSearch(employee.name).includes(normalizeForSearch(search))
+    )
+    setFilteredEmployees(filtered)
+  }, [search, employees])
+
   return (
     <MainLayout>
       <div className="p-10">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-2">
           <h1 className="hidden sm:inline text-2xl font-bold text-gray-800">Empleados</h1>
-          <h1 className="inline sm:hidden text-2xl font-bold text-gray-800">Planillas</h1>
+        </div>
+        <div className="mb-3 flex justify-between">
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Buscar empleado"
+            type="text"
+            className="rounded-md border-gray-300 border focus:border-blue-500 focus:ring-blue-500 p-2 mr-4 min-w-52"
+            required
+          />
           <div className="space-x-4">
             <Link
               to="/"
@@ -31,10 +57,17 @@ function EmpleadoList() {
 
         {employees.length > 0 && (
           <div className="bg-white rounded-lg shadow overflow-hidden">
-            <div className="overflow-x-auto max-h-[75vh] overflow-y-auto">
+            <div className="overflow-x-auto max-h-[70vh] overflow-y-auto">
               <table className="w-full">
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {employees.map((employee) => (
+                  {employees.length > 0 && filteredEmployees.length === 0 && (
+                    <tr>
+                      <td colSpan={6} className="px-6 py-4 whitespace-nowrap text-center">
+                        No se encontraron empleados
+                      </td>
+                    </tr>
+                  )}
+                  {filteredEmployees.map((employee) => (
                     <tr key={employee.id}>
                       <td className="px-6 py-4 whitespace-nowrap sticky left-0 bg-white">
                         <div className="text-sm font-medium text-gray-900">{employee.name}</div>
@@ -57,7 +90,10 @@ function EmpleadoList() {
                         <div className="text-sm text-gray-900">{employee.department}</div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 space-x-3">
-                        <button className="text-blue-600 hover:text-blue-900 inline-flex items-center gap-1">
+                        <button
+                          onClick={() => setEmpleadoToEdit(employee)}
+                          className="text-blue-600 hover:text-blue-900 inline-flex items-center gap-1"
+                        >
                           <Pencil className="w-4 h-4" />
                           <span className="hidden md:inline">Editar</span>
                         </button>
@@ -123,6 +159,9 @@ function EmpleadoList() {
             employee={empleadoToDelete}
             onClose={() => setEmpleadoToDelete(null)}
           />
+        )}
+        {empleadoToEdit && (
+          <EditEmpleadoForm employee={empleadoToEdit} onClose={() => setEmpleadoToEdit(null)} />
         )}
       </div>
     </MainLayout>
