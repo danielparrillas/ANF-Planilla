@@ -10,8 +10,9 @@ import PlanillaList from "./pages/planillas/planilla-list";
 import PlanillaForm from "./pages/planillas/planilla-form";
 import ReporteList from "./pages/reportes/reporte-list";
 import ReporteForm from "./pages/reportes/reporte-form";
-import NotFoundPage from "./pages/notFoundPage/not-found-page";
 import { Toaster } from "sonner";
+import NotFoundPage from "./pages/notFoundPage/not-found-page";
+import DashboardPage from "./pages/dashboard/dashboard-page";
 
 const router = createBrowserRouter(
 	[
@@ -50,6 +51,10 @@ const router = createBrowserRouter(
 		{
 			path: "*", // Ruta de error 404
 			element: <NotFoundPage />,
+		},
+		{
+			path: "/dashboard",
+			element: <DashboardPage />,
 		},
 	],
 	{
