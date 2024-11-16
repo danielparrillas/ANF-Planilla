@@ -2,14 +2,29 @@ import React, { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import { LogOut, Menu, X } from "lucide-react";
 import { useAuth } from "../store/authStore";
+import { Role } from "../types/roleEnum";
 
 interface Props {
 	children: React.ReactNode;
 }
 
+interface ItemLink {
+	label: string;
+	to: string;
+	role: Role;
+}
+
+const links: ItemLink[] = [
+	{ label: "Panel de Control", to: "/dashboard", role: Role.general },
+	{ label: "Empleados", to: "/empleados", role: Role.admin },
+	{ label: "Planillas", to: "/planillas", role: Role.user },
+	{ label: "Reportes", to: "/reportes", role: Role.user },
+];
+
 export function MainLayout({ children }: Props): ReactNode {
 	const logout = useAuth((state) => state.logout);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const role = useAuth((state) => state.getRole());
 
 	const toggleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
@@ -46,38 +61,19 @@ export function MainLayout({ children }: Props): ReactNode {
 
 						{/* Menú de navegación para desktop */}
 						<ul className="hidden md:flex space-x-6">
-							<li>
-								<Link
-									to="/dashboard"
-									className="text-white/90 hover:text-white hover:font-medium transition-colors flex items-center gap-2"
-								>
-									Panel de Control
-								</Link>
-							</li>
-							<li>
-								<Link
-									to="/empleados"
-									className="text-white/90 hover:text-white hover:font-medium transition-colors flex items-center gap-2"
-								>
-									Empleados
-								</Link>
-							</li>
-							<li>
-								<Link
-									to="/planillas"
-									className="text-white/90 hover:text-white hover:font-medium transition-colors flex items-center gap-2"
-								>
-									Planillas
-								</Link>
-							</li>
-							<li>
-								<Link
-									to="/reportes"
-									className="text-white/90 hover:text-white hover:font-medium transition-colors flex items-center gap-2"
-								>
-									Reportes
-								</Link>
-							</li>
+							{links.map(
+								(link) =>
+									(role === link.role || role === Role.admin) && (
+										<li key={link.to}>
+											<Link
+												to={link.to}
+												className="text-white/90 hover:text-white hover:font-medium transition-colors"
+											>
+												{link.label}
+											</Link>
+										</li>
+									)
+							)}
 							<li>
 								<button
 									className="text-white/90 hover:text-white hover:font-medium transition-colors flex items-center gap-2"
@@ -94,42 +90,20 @@ export function MainLayout({ children }: Props): ReactNode {
 					{isMenuOpen && (
 						<div className="md:hidden mt-4 pb-4">
 							<ul className="flex flex-col space-y-4">
-								<li>
-									<Link
-										to="/dashboard"
-										className="text-white/90 hover:text-white hover:font-medium transition-colors block py-2"
-										onClick={() => setIsMenuOpen(false)}
-									>
-										Panel de Control
-									</Link>
-								</li>
-								<li>
-									<Link
-										to="/empleados"
-										className="text-white/90 hover:text-white hover:font-medium transition-colors block py-2"
-										onClick={() => setIsMenuOpen(false)}
-									>
-										Empleados
-									</Link>
-								</li>
-								<li>
-									<Link
-										to="/planillas"
-										className="text-white/90 hover:text-white hover:font-medium transition-colors block py-2"
-										onClick={() => setIsMenuOpen(false)}
-									>
-										Planillas
-									</Link>
-								</li>
-								<li>
-									<Link
-										to="/reportes"
-										className="text-white/90 hover:text-white hover:font-medium transition-colors block py-2"
-										onClick={() => setIsMenuOpen(false)}
-									>
-										Reportes
-									</Link>
-								</li>
+								{links.map(
+									(link) =>
+										(role === link.role || role === Role.admin) && (
+											<li key={link.to}>
+												<Link
+													to={link.to}
+													className="text-white/90 hover:text-white hover:font-medium transition-colors block py-2"
+													onClick={() => setIsMenuOpen(false)}
+												>
+													{link.label}
+												</Link>
+											</li>
+										)
+								)}
 								<li>
 									<button
 										className="text-white/90 hover:text-white hover:font-medium transition-colors flex gap-2 py-2"

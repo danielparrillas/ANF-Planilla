@@ -6,13 +6,19 @@ import { mockUsers } from "../mocks/auth-mock-data";
 interface AuthState {
 	user: User | null;
 	logout: () => void;
+	getRole: () => string | null;
 }
 
 export const useAuth = create<AuthState>()(
 	persist(
-		(set) => ({
+		(set, get) => ({
 			user: null,
 			logout: () => set(() => ({ user: null })),
+			getRole: () => {
+				const user = get().user;
+				if (!user) return null;
+				return user.role;
+			},
 		}),
 		{
 			name: "auth-storage",
