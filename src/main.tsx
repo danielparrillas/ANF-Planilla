@@ -11,6 +11,7 @@ import PlanillaForm from "./pages/planillas/planilla-form";
 import ReporteList from "./pages/reportes/reporte-list";
 import ReporteForm from "./pages/reportes/reporte-form";
 import NotFoundPage from "./pages/notFoundPage/not-found-page";
+import { Toaster } from "sonner";
 
 const router = createBrowserRouter(
 	[
@@ -59,5 +60,6 @@ const router = createBrowserRouter(
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<RouterProvider router={router} />
+		<Toaster richColors />
 	</StrictMode>
 );
