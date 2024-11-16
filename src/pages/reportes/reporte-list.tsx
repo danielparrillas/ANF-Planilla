@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { MainLayout } from "../../layouts/main-layout";
 import { formatCurrency } from "../../utils/format";
-import EditEmpleadoForm from "../empleados/components/edit-empelado-form";
-import DeleteEmpleadoForm from "../empleados/components/delete-empelado-form";
 import NewEmpleadoForm from "../empleados/components/new-empelado-form";
 import { mockSalaryRecords } from "../../mocks/mock-salary-records";
 import { SalaryRecord } from "../SalaryRecord";
@@ -16,6 +14,8 @@ function EmpleadoList() {
 	const [recordToEdit, setRecordToEdit] = useState<SalaryRecord | null>(null); // Estado para editar
 	const [search, setSearch] = useState(""); // Estado para búsqueda
 	const [filteredRecords, setFilteredRecords] = useState(mockSalaryRecords); // Registros filtrados
+
+	console.log(recordToDelete, recordToEdit);
 
 	// Manejar cambios en la búsqueda
 	const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,22 +127,6 @@ function EmpleadoList() {
 							No se encontraron reportes para el mes especificado.
 						</div>
 					</div>
-				)}
-
-				{/* Modal Eliminar */}
-				{recordToDelete && (
-					<DeleteEmpleadoForm
-						employee={recordToDelete}
-						onClose={() => setRecordToDelete(null)}
-					/>
-				)}
-
-				{/* Modal Editar */}
-				{recordToEdit && (
-					<EditEmpleadoForm
-						employee={recordToEdit}
-						onClose={() => setRecordToEdit(null)}
-					/>
 				)}
 			</div>
 		</MainLayout>
