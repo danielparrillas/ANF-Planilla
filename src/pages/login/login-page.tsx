@@ -9,8 +9,8 @@ export default function LoginPage() {
 		e.preventDefault();
 		const form = e.currentTarget;
 		const formData = new FormData(form);
-		const username = formData.get("username") as string;
-		const password = formData.get("password") as string;
+		const username = String(formData.get("username")).trim();
+		const password = String(formData.get("password")).trim();
 		try {
 			login({ username, password });
 			const from = location.state?.from?.pathname || "/";
