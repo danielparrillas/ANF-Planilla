@@ -1,13 +1,15 @@
 import React, { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import ProtectedRoute from "../components/protected-route";
+import { useAuth } from "../store/authStore";
 
 interface Props {
 	children: React.ReactNode;
 }
 
 export function MainLayout({ children }: Props): ReactNode {
+	const logout = useAuth((state) => state.logout);
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	const toggleMenu = () => {
@@ -78,6 +80,15 @@ export function MainLayout({ children }: Props): ReactNode {
 										Reportes
 									</Link>
 								</li>
+								<li>
+									<button
+										className="text-white/90 hover:text-white hover:font-medium transition-colors flex items-center gap-2"
+										onClick={logout}
+									>
+										<span className="hidden lg:block">Cerrar Sesión</span>
+										<LogOut className="size-6" />
+									</button>
+								</li>
 							</ul>
 						</div>
 
@@ -120,6 +131,15 @@ export function MainLayout({ children }: Props): ReactNode {
 										>
 											Reportes
 										</Link>
+									</li>
+									<li>
+										<button
+											className="text-white/90 hover:text-white hover:font-medium transition-colors flex gap-2 py-2"
+											onClick={logout}
+										>
+											Cerrar Sesión
+											<LogOut className="size-6" />
+										</button>
 									</li>
 								</ul>
 							</div>

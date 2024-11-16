@@ -11,7 +11,6 @@ export default function LoginPage() {
 		const formData = new FormData(form);
 		const username = formData.get("username") as string;
 		const password = formData.get("password") as string;
-		console.log({ username, password });
 		try {
 			login({ username, password });
 			const from = location.state?.from?.pathname || "/";
@@ -20,6 +19,7 @@ export default function LoginPage() {
 			if (error instanceof Error) toast.error(error.message);
 			return;
 		}
+		toast.success("Inicio de sesión exitoso");
 		form.reset();
 	};
 	return (
