@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Employee } from "../types";
-import { mockEmployees } from "../pages/mock-data";
+import { mockEmployees } from "../mocks/empleados-mock-data";
 
 interface EmployeeState {
 	employees: Employee[];
